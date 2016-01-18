@@ -6,13 +6,15 @@
 ## 4. Media only for TST+ and TST- (MEDIA)
 ## 5. TB only for TST+ and TST- (TB)
 
-## Load Data and generate 'lumiResults' data.frame containing raw intensity values
-## Dir: /Users/chetanseshadri/Dropbox/documents/Seshadri Data/FHCRC/Illumina_TECS/2010_07_23
 library(lumi)
 library(gdata)
 library(genefilter)
+
+## Users should download data raw data from GSE76873 and extract results into a data frame containing probe names as rows and sample names as columns.
+## Otherwise, the raw data output file from Illumina BeadStudio is the inputFile
+## Load Data and generate 'lumiResults' data.frame containing raw intensity values
 inputFile<-"2010.07.01.chethan.FinalReport_noRNAday5.txt"
-decodeFile<-"targetsForSignalIntensityFiltering2.txt"
+decodeFile<-"targetsForSignalIntensityFiltering2.txt"  ## Available in SeshadriLab Github folder
 d<-lumiR(inputFile)
 dnorm<-lumiExpresso(d, bg.correct = FALSE, variance.stabilize=FALSE, normalize.param = list(method='quantile'))
 lumiResults<-data.frame(dnorm@featureData$ProbeID, dnorm@featureData$TargetID, exprs(dnorm), check.names=F)
